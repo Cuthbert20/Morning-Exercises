@@ -35,9 +35,12 @@
     // Step 1
     // Run the greet method on the person object.
     // Pay close attention to what the console log of 'this' prints.
+    person.greet()//if you console.log person.greet and invoke it you will see what this. is
     // Step 2
     // Now create a variable called fn and save person.greet to it.
+    let fn = person.greet//we loose context when we create a variable this way. this. is defaulting to the window/global area.
     // Run the fn function and notice what 'this' is in the console.
+    fn()
     // Step 3
     // If we pass person.greet as a parameter to a function and run
     // it we will see the same issue.
@@ -46,6 +49,7 @@
       return greet(name)
     }
     // Invoke callerBack and pass in person.greet and a name
+    callerBack(person.greet, "Spencer")//this won't work because this is defaulting to the window/global area.
     // You should see that it breaks all because of 'this'
     // 'this' is the window object and it does not have the state property.
     // How can we ensure that function uses the correct 'this' and let us
@@ -69,6 +73,8 @@
         }
       },
     }
+    personTwo.props.greet = person.greet
+    personTwo.props.greet()
     // Run personTwo.props.greet and notice what 'this' is.
     // Notice 'this' still does not see state! But it does see the job and
     // friend properties. Interesting.
@@ -76,6 +82,8 @@
     // There is a fix to ensure you function remembers what 'this' should be.
     // look up '.bind' and try and redo steps 2, 3 and 4 but use your new found
     // knowledge about '.bind' to make sure it remembers what 'this' is.
+    let personTwoBound = personTwo.props.greet.bind(person)
+    personTwoBound()
   </script>
 </body>
 
